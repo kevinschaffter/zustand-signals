@@ -1,13 +1,12 @@
 import { memo } from "react";
 import classes from "./InfoBar.module.scss";
-import { todos } from "../todo.signals";
+import { lastUpdated, todos } from "../todo.signals";
 import { computed } from "@preact/signals-react";
 
 export const InfoBar = memo(() => {
   const totalCompleted = computed(
-    () => todos.value.todos.filter((t) => t.completed).length
+    () => todos.value.filter((t) => t.completed).length
   );
-
   return (
     <>
       <div className={classes.lastUpdated}>
@@ -16,7 +15,7 @@ export const InfoBar = memo(() => {
       </div>
       <div className={classes.lastUpdated}>
         <p>Last Updated:</p>
-        <p>{todos.value.lastUpdated}</p>
+        <p>{lastUpdated.value}</p>
       </div>
     </>
   );

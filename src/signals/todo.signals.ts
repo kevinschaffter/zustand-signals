@@ -4,7 +4,6 @@ export const lastUpdated = signal<string>("");
 
 export const input = signal<string>("");
 
-export const todos = signal<{
-  todos: { text: string; completed: boolean }[];
-  lastUpdated?: string;
-}>({ todos: [{ text: "test", completed: false }] });
+export const todos = signal<{ text: string; completed: boolean }[]>([
+  { text: "test", completed: false },
+]);

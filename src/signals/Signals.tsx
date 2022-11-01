@@ -1,4 +1,4 @@
-import { input, todos } from "./todo.signals";
+import { input, todos, lastUpdated } from "./todo.signals";
 import { InfoBar } from "./info-bar";
 import { TodoList, TodoWrapper } from "../components";
 
@@ -8,20 +8,15 @@ export const Signals = () => {
   };
 
   const handleAddTodo = () => {
-    todos.value = {
-      ...todos.value,
-      todos: [...todos.value.todos, { text: input.value, completed: false }],
-    };
+    todos.value = [...todos.value, { text: input.value, completed: false }];
     input.value = "";
   };
 
   const handleTodoClick = (index: number) => () => {
-    todos.value = {
-      todos: todos.value.todos.map((todo, idx) =>
-        idx === index ? { ...todo, completed: !todo.completed } : todo
-      ),
-      lastUpdated: new Date().toLocaleString(),
-    };
+    todos.value = todos.value.map((todo, idx) =>
+      idx === index ? { ...todo, completed: !todo.completed } : todo
+    );
+    lastUpdated.value = new Date().toLocaleString();
   };
 
   return (
@@ -31,7 +26,7 @@ export const Signals = () => {
         handleAddTodo={handleAddTodo}
         handleInputChange={handleInputChange}
         handleTodoClick={handleTodoClick}
-        todos={todos.value.todos}
+        todos={todos.value}
       />
     </TodoWrapper>
   );
