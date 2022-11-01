@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import classes from "./App.module.scss";
+import { useState } from "react";
+import { Signals } from "./signals";
+import classNames from "classnames";
 
-function App() {
+type Views = "signals" | "zustand";
+
+const App = () => {
+  const [currentView, setCurrentView] = useState<"signals" | "zustand">(
+    "signals"
+  );
+
+  const handleToggle = (view: Views) => () => setCurrentView(view);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className={classes.appContainer}>
+      <div className={classes.selector}>
+        <button
+          className={classNames({
+            [classes.active]: currentView === "signals",
+          })}
+          onClick={handleToggle("signals")}
         >
-          Learn React
-        </a>
-      </header>
+          <h2>Signals</h2>
+        </button>
+        <button
+          className={classNames({
+            [classes.active]: currentView === "zustand",
+          })}
+          onClick={handleToggle("zustand")}
+        >
+          <h2>Zustand</h2>
+        </button>
+      </div>
+      {currentView === "signals" ? <Signals /> : <div>Zustand</div>}
     </div>
   );
-}
+};
 
 export default App;

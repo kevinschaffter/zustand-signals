@@ -1,0 +1,42 @@
+.toDoContainer {
+  height: 600px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  background-color: #ecf0f1;
+  padding: 1rem;
+}
+
+.list {
+  margin: 1rem 0;
+  overflow-y: scroll;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  border-radius: 2rem;
+  height: 30px;
+  padding: 0 0.5rem;
+}
+
+.inputContainer {
+  width: 100%;
+  gap: 10px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+
+.todoItem {
+  height: 20px;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  border: 1px solid #2c3e50;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
