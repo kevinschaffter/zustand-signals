@@ -1,42 +1,54 @@
-import React from "react";
+import { ChangeEvent } from "react";
 import classes from "./TodoList.module.scss";
-import { FaCheckCircle } from "react-icons/fa";
-import { input } from "../../signals/todo.signals";
+import { FaCheckCircle, FaPlusCircle, FaTrash } from "react-icons/fa";
 
 type ToDoListProps = {
   todos: { text: string; completed: boolean }[];
-  handleTodoClick: (index: number) => () => void;
-  handleAddTodo: () => void;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTodoClick: (index: number) => () => void;
+  onAddTodo: () => void;
+  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  inputValue: string;
+  onRemoveTodo: (index: number) => void;
 };
 
 export const TodoList = ({
+  inputValue,
   todos,
-  handleTodoClick,
-  handleAddTodo,
-  handleInputChange,
+  onTodoClick,
+  onAddTodo,
+  onInputChange,
+  onRemoveTodo,
 }: ToDoListProps) => {
+  const handleRemoveTodo = (index: number) => (e: any) => {
+    e.stopPropagation();
+    onRemoveTodo(index);
+  };
   return (
     <section className={classes.toDoContainer}>
       <div className={classes.list}>
         {todos.map((todo, index) => (
           <div
             className={classes.todoItem}
-            onClick={handleTodoClick(index)}
+            onClick={onTodoClick(index)}
             key={todo.text}
           >
             <p>{todo.text}</p>
-            {todo.completed && <FaCheckCircle color="green" />}
+            <div className={classes.iconContainer}>
+              {todo.completed && <FaCheckCircle color="#27ae60" />}
+              <FaTrash color="#c0392b" onClick={handleRemoveTodo(index)} />
+            </div>
           </div>
         ))}
       </div>
       <div className={classes.inputContainer}>
         <input
-          value={input.value}
+          value={inputValue}
           className={classes.input}
-          onChange={handleInputChange}
+          onChange={onInputChange}
         ></input>
-        <button onClick={handleAddTodo}>Add</button>
+        <button onClick={onAddTodo} className={classes.button}>
+          <FaPlusCircle color="green" size="24px" />
+        </button>
       </div>
     </section>
   );

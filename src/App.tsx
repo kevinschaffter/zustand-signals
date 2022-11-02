@@ -2,6 +2,7 @@ import classes from "./App.module.scss";
 import { useState } from "react";
 import { Signals } from "./signals";
 import classNames from "classnames";
+import { Zustand } from "./zustand";
 
 type Views = "signals" | "zustand";
 
@@ -32,7 +33,7 @@ const App = () => {
           <h2>Zustand</h2>
         </button>
       </div>
-      {currentView === "signals" ? <Signals /> : <div>Zustand</div>}
+      {currentView === "signals" ? <Signals /> : <Zustand />}
     </div>
   );
 };

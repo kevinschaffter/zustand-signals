@@ -1,22 +1,26 @@
 import { memo } from "react";
 import classes from "./InfoBar.module.scss";
-import { lastUpdatedSignal, todosSignal } from "../todo.signals";
-import { computed } from "@preact/signals-react";
+import { useTodoStore } from "../todoStore";
+import shallow from "zustand/shallow";
 
 export const InfoBar = memo(() => {
-  const totalCompleted = computed(
-    () => todosSignal.value.filter((t) => t.completed).length
+  const [lastUpdated, totalCompleted] = useTodoStore(
+    (state) => [
+      state.lastUpdated,
+      state.todos.filter((todo) => todo.completed).length,
+    ],
+    shallow
   );
 
   return (
     <>
       <div className={classes.infoContainer}>
         <p>Total Completed:</p>
-        <p>{totalCompleted.value}</p>
+        <p>{totalCompleted}</p>
       </div>
       <div className={classes.infoContainer}>
         <p>Last Updated:</p>
-        <p>{lastUpdatedSignal.value}</p>
+        <p>{lastUpdated}</p>
       </div>
     </>
   );
